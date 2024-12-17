@@ -19,7 +19,7 @@ public class TestType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_type_id")
-    private Long id;
+    private Long testTypeId;
 
     @Column(name = "name")
     private String name;
