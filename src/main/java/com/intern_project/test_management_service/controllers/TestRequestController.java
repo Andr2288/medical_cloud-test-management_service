@@ -21,6 +21,12 @@ public class TestRequestController {
         return testRequestService.getTestRequests();
     }
 
+    @GetMapping("/getTestsRequestsId")
+    public List<TestRequest> getTestsId(@RequestBody Long userId) {
+
+        return testRequestService.getTests(userId);
+    }
+
     @PostMapping("/createTestRequest")
     public TestRequest createTestRequest(@RequestBody TestRequest testRequest) {
 

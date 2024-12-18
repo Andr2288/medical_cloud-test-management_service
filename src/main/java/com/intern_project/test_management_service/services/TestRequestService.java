@@ -22,4 +22,8 @@ public class TestRequestService {
 
         return testRequestRepository.save(testRequest);
     }
+
+    public List<TestRequest> getTests(Long userId) {
+        return testRequestRepository.findByUserUserId(userId);
+    }
 }
