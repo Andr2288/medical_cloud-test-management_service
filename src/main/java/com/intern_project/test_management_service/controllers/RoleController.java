@@ -12,25 +12,17 @@ import java.util.List;
 @RestController
 public class RoleController {
 
-    private final JdbcTemplate jdbcTemplate;
     private final RoleService roleService;
 
-    @GetMapping("/getRoles")
+    @GetMapping("/get-roles")
     public List<Role> getRoles() {
 
         return roleService.getRoles();
     }
 
-    @PostMapping("/createRole")
+    @PostMapping("/create-role")
     public Role createRole(@RequestBody Role role) {
 
         return roleService.addRole(role);
-    }
-
-    @DeleteMapping("/deleteRolesAndResetSequence")
-    public void deleteAllRoles() {
-
-        String sqlTruncate = "TRUNCATE TABLE roles RESTART IDENTITY";
-        jdbcTemplate.update(sqlTruncate);
     }
 }

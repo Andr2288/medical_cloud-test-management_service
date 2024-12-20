@@ -12,25 +12,20 @@ import java.util.List;
 @RestController
 public class TestTypeController {
 
-    private final JdbcTemplate jdbcTemplate;
     private final TestTypeService testTypeService;
 
-    @GetMapping("/getTestTypes")
+    @GetMapping("/get-test-types")
     public List<TestType> getTestTypes() {
-
         return testTypeService.getTestTypes();
     }
 
-    @PostMapping("/createTestType")
+    @PostMapping("/create-test-type")
     public TestType createTestType(@RequestBody TestType testType) {
-
         return testTypeService.addTestType(testType);
     }
 
-    @DeleteMapping("/deleteTestTypesAndResetSequence")
-    public void deleteAllTestTypes() {
+    @DeleteMapping("/delete-test-by-id")
+    public void deleteTestById(@RequestParam Long id) {
 
-        String sqlTruncate = "TRUNCATE TABLE test_types RESTART IDENTITY CASCADE";
-        jdbcTemplate.update(sqlTruncate);
     }
 }
