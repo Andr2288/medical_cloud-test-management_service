@@ -14,36 +14,35 @@ import java.util.List;
 @RestController
 public class TestController {
 
-    private final JdbcTemplate jdbcTemplate;
     private final TestService testService;
     private final TestRequestService testRequestService;
 
 
-    @GetMapping("/getTests")
+    @GetMapping("/get-tests")
     public List<Test> getTests() {
 
         return testService.getTests();
     }
 
-    @PostMapping("/createTest")
+    @PostMapping("/create-test")
     public Test createTest(@RequestBody Test test) {
 
         return testService.addTest(test);
     }
 
-    @GetMapping("/getTestRequests")
+    @GetMapping("/get-test-requests")
     public List<TestRequest> getTestRequests() {
 
         return testRequestService.getTestRequests();
     }
 
-    @GetMapping("/getTestsRequestsId")
+    @GetMapping("/get-tests-requests-id")
     public List<TestRequest> getTestsId(@RequestBody Long userId) {
 
         return testRequestService.getTests(userId);
     }
 
-    @PostMapping("/createTestRequest")
+    @PostMapping("/create-test-request")
     public TestRequest createTestRequest(@RequestBody TestRequest testRequest) {
 
         return testRequestService.addTestRequest(testRequest);
