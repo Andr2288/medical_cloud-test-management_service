@@ -5,7 +5,6 @@ import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.services.TestRequestService;
 import com.intern_project.test_management_service.services.TestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,10 +35,10 @@ public class TestController {
         return testRequestService.getTestRequests();
     }
 
-    @GetMapping("/get-tests-requests-id")
-    public List<TestRequest> getTestsId(@RequestBody Long userId) {
+    @GetMapping("/get-tests-requests-by-user-id/{userId}")
+    public List<TestRequest> getTestRequestsByUserId(@PathVariable Long userId) {
 
-        return testRequestService.getTests(userId);
+        return testRequestService.getTestRequestsByUserId(userId);
     }
 
     @PostMapping("/create-test-request")
