@@ -3,7 +3,6 @@ package com.intern_project.test_management_service.controllers;
 import com.intern_project.test_management_service.models.Role;
 import com.intern_project.test_management_service.services.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
