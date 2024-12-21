@@ -22,4 +22,11 @@ public class TestTypeService {
 
         return testTypeRepository.findAll();
     }
+
+    public void deleteTestById(Long id) {
+        if (!testTypeRepository.existsById(id)) {
+            throw new IllegalArgumentException("Test type with id " + id + " not found");
+        }
+        testTypeRepository.deleteById(id);
+    }
 }

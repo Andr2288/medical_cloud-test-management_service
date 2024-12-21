@@ -35,6 +35,9 @@ public class TestRequest {
     @Column(name = "completion_date")
     private LocalDateTime completionDate;
 
+    @Column(name = "estimated_completion_time")
+    private LocalDateTime estimatedCompletionTime;
+
     @Column(name = "status")
     private String status;
 

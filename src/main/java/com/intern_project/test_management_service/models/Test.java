@@ -41,4 +41,7 @@ public class Test {
     @JsonIgnore
     @OneToMany(mappedBy = "test")
     private List<TestRequest> testRequests;
+
+    @Column(name = "estimated_length")
+    private Integer estimatedLength;
 }
