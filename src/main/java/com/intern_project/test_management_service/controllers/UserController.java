@@ -1,18 +1,22 @@
 package com.intern_project.test_management_service.controllers;
 
 import com.intern_project.test_management_service.models.User;
+import com.intern_project.test_management_service.repositories.UserRepository;
 import com.intern_project.test_management_service.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 public class UserController {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
     private final UserService userService;
 
     @GetMapping("/get-users")
@@ -33,13 +37,17 @@ public class UserController {
     }
 
     @DeleteMapping("/delete-user/{id}")
-    public void deleteUserById(@PathVariable Long id) {
-        // Delete user roles associated with the user
-        String deleteUserRolesSql = "DELETE FROM user_roles WHERE user_id = ?";
-        jdbcTemplate.update(deleteUserRolesSql, id);
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
+        // Fetch the user by ID
+        Optional<User> optionalUser = userRepository.findById(id);
 
-        // Delete the user
-        String deleteUserSql = "DELETE FROM users WHERE id = ?";
-        jdbcTemplate.update(deleteUserSql, id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setDeleteDate(LocalDateTime.now());
+            userRepository.save(user);
+            return ResponseEntity.ok("User deleted successfully (soft delete)");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 }
