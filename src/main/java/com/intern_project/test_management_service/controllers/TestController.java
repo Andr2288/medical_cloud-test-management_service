@@ -5,6 +5,9 @@ import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.services.TestRequestService;
 import com.intern_project.test_management_service.services.TestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -36,10 +39,10 @@ public class TestController {
         return testRequestService.getTestRequests();
     }
 
-    @GetMapping("/get-tests-requests-id")
-    public List<TestRequest> getTestsId(@RequestBody Long userId) {
+    @GetMapping("/get-tests-requests-by-user-id/{userId}")
+    public List<TestRequest> getTestRequestsByUserId(@PathVariable Long userId) {
 
-        return testRequestService.getTests(userId);
+        return testRequestService.getTestRequestsByUserId(userId);
     }
 
     @PostMapping("/create-test-request")
@@ -49,4 +52,22 @@ public class TestController {
         testRequestService.calculateEstimatedCompletionTime(testRequest);
         return testRequestService.addTestRequest(testRequest);
     }
+
+    @GetMapping("/user/{userId}/date-range")
+    public ResponseEntity<List<TestRequest>> getTestRequestsByDateRangeAndUserId(
+            @PathVariable Long userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        try {
+            List<TestRequest> testRequests = testRequestService.getTestRequestsByDateRangeAndUserId(
+                    startDate,
+                    endDate,
+                    userId
+            );
+            return ResponseEntity.ok(testRequests);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 }

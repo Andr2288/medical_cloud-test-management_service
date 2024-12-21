@@ -45,10 +45,10 @@ public class User {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "delete_date")
+    private LocalDateTime deleteDate;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<TestRequest> testRequests;
-
-    @Column(name = "delete_date")
-    private LocalDateTime deleteDate;
 }
