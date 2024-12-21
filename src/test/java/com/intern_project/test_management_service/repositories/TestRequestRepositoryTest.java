@@ -51,9 +51,5 @@ class TestRequestRepositoryTest {
         assertThat(expectedList).isNotEmpty();
         assertThat(expectedList).hasSize(1);
         assertEquals(expectedList.get(0).getUser().getUserId(), userId);
-
-        // Print JSON for debugging
-        System.out.println("\nTest Requests JSON:");
-        System.out.println(JsonUtils.toFormattedJson(expectedList));
     }
 }
