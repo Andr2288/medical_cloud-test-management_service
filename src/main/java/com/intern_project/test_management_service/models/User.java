@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -47,4 +48,7 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<TestRequest> testRequests;
+
+    @Column(name = "delete_date")
+    private LocalDateTime deleteDate;
 }
