@@ -16,11 +16,13 @@ public class TestTypeController {
 
     @GetMapping("/get-test-types")
     public List<TestType> getTestTypes() {
+
         return testTypeService.getTestTypes();
     }
 
     @PostMapping("/create-test-type")
     public TestType createTestType(@RequestBody TestType testType) {
+
         return testTypeService.addTestType(testType);
     }
 

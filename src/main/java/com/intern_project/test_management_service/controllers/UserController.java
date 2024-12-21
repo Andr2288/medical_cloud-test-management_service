@@ -31,21 +31,43 @@ public class UserController {
         return userService.addUser(user);
     }
 
-    @GetMapping("/get-user-by-id")
-    public User getUserById(@RequestParam("id") Long id) {
+    @GetMapping("/get-user-by-id/{id}")
+    public User getUserById(@PathVariable Long id) {
+
         return userService.getUserById(id);
     }
 
-    @DeleteMapping("/delete-user/{id}")
+    @DeleteMapping("/delete-user-by-id/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
+
         // Fetch the user by ID
         Optional<User> optionalUser = userRepository.findById(id);
 
+        // If the user is found, set the delete date to current
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setDeleteDate(LocalDateTime.now());
             userRepository.save(user);
             return ResponseEntity.ok("User deleted successfully (soft delete)");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+    @PutMapping("/restore-user-by-id/{id}")
+    public ResponseEntity<String> restoreUserById(@PathVariable Long id) {
+
+        // Fetch the user by ID
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        // If the user is found, reset the delete date to null
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            user.setDeleteDate(null);
+            userRepository.save(user);
+
+            return ResponseEntity.ok("User restored successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }

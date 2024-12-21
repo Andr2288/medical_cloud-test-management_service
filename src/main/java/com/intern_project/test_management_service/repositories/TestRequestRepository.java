@@ -15,4 +15,5 @@ public interface TestRequestRepository extends JpaRepository<TestRequest, Long> 
             LocalDateTime endDate,
             Long userId
     );
+    List<TestRequest> findTestRequestsByUserUserId(Long userId);
 }

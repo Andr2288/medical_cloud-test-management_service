@@ -24,8 +24,8 @@ public class TestRequestService {
         return testRequestRepository.save(testRequest);
     }
 
-    public List<TestRequest> getTests(Long userId) {
-        return testRequestRepository.findByUserUserId(userId);
+    public List<TestRequest> getTestRequestsByUserId(Long userId) {
+        return testRequestRepository.findTestRequestsByUserUserId(userId);
     }
 
     public void calculateEstimatedCompletionTime(TestRequest testRequest) {

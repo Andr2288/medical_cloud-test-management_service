@@ -7,6 +7,7 @@ import com.intern_project.test_management_service.services.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -38,10 +39,10 @@ public class TestController {
         return testRequestService.getTestRequests();
     }
 
-    @GetMapping("/get-tests-requests-id")
-    public List<TestRequest> getTestsId(@RequestBody Long userId) {
+    @GetMapping("/get-tests-requests-by-user-id/{userId}")
+    public List<TestRequest> getTestRequestsByUserId(@PathVariable Long userId) {
 
-        return testRequestService.getTests(userId);
+        return testRequestService.getTestRequestsByUserId(userId);
     }
 
     @PostMapping("/create-test-request")
