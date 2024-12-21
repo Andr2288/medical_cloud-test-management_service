@@ -26,4 +26,14 @@ public class TestRequestService {
     public List<TestRequest> getTests(Long userId) {
         return testRequestRepository.findByUserUserId(userId);
     }
+
+    public void calculateEstimatedCompletionTime(TestRequest testRequest) {
+        if (testRequest.getTest() != null && testRequest.getTest().getEstimatedLength() != null) {
+            int estimatedLength = testRequest.getTest().getEstimatedLength();
+            testRequest.setEstimatedCompletionTime(testRequest.getRequestDate().plusDays(estimatedLength));
+        } else {
+            throw new IllegalArgumentException("Test or estimated length is missing");
+        }
+    }
+
 }

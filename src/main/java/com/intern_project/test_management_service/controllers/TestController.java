@@ -5,9 +5,9 @@ import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.services.TestRequestService;
 import com.intern_project.test_management_service.services.TestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,6 +45,8 @@ public class TestController {
     @PostMapping("/create-test-request")
     public TestRequest createTestRequest(@RequestBody TestRequest testRequest) {
 
+        testRequest.setRequestDate(LocalDateTime.now());
+        testRequestService.calculateEstimatedCompletionTime(testRequest);
         return testRequestService.addTestRequest(testRequest);
     }
 }
