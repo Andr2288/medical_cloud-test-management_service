@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 public interface TestRequestRepository extends JpaRepository<TestRequest, Long> {
-    List<TestRequest> findByUserUserId(Long userId);
     List<TestRequest> findByRequestDateBetweenAndUserUserId(
             LocalDateTime startDate,
             LocalDateTime endDate,
             Long userId
     );
     List<TestRequest> findTestRequestsByUserUserId(Long userId);
+    List<TestRequest> findAllByUserUserId(Long userId);
 }

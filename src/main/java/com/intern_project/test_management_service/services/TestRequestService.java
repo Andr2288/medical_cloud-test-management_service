@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.EntityNotFoundException;
+
 
 @RequiredArgsConstructor
 @Service
@@ -55,4 +58,34 @@ public class TestRequestService {
 
         return testRequestRepository.findByRequestDateBetweenAndUserUserId(startDate, endDate, userId);
     }
+
+    public boolean updateStatusIfOverdue(TestRequest testRequest) {
+        boolean isOverdue = isTestOverdue(testRequest);
+        if (isOverdue && (testRequest.getStatus() == null || !"OVERDUE".equals(testRequest.getStatus()))) {
+            testRequest.setStatus("OVERDUE");
+            testRequestRepository.save(testRequest);
+        }
+        return isOverdue;
+    }
+
+    public boolean isTestOverdue(TestRequest testRequest) {
+        return (testRequest.getEstimatedCompletionTime() != null &&
+                testRequest.getEstimatedCompletionTime().isBefore(LocalDateTime.now()));
+    }
+
+    public List<TestRequest> findAndUpdateOverdueTests(Long userId) {
+        List<TestRequest> userTests = testRequestRepository.findAllByUserUserId(userId);
+        if (userTests.isEmpty()) {
+            throw new EntityNotFoundException("No test requests found for user ID " + userId);
+        }
+
+        List<TestRequest> overdueTests = new ArrayList<>();
+        for (TestRequest test : userTests) {
+            if (updateStatusIfOverdue(test) || test.getStatus().equals("OVERDUE")) {
+                overdueTests.add(test);
+            }
+        }
+        return overdueTests;
+    }
+
 }
