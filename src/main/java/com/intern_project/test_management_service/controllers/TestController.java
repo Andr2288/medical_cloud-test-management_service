@@ -4,6 +4,7 @@ import com.intern_project.test_management_service.models.Test;
 import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.services.TestRequestService;
 import com.intern_project.test_management_service.services.TestService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -70,4 +71,13 @@ public class TestController {
         }
     }
 
+    @GetMapping("/users/{userId}/overdue-tests")
+    public ResponseEntity<List<TestRequest>> getOverdueTests(@PathVariable Long userId) {
+        try {
+            List<TestRequest> overdueTests = testRequestService.findAndUpdateOverdueTests(userId);
+            return ResponseEntity.ok(overdueTests);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
