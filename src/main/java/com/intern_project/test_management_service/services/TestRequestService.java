@@ -11,8 +11,8 @@ import java.util.List;
 import jakarta.persistence.EntityNotFoundException;
 
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class TestRequestService {
 
     private final TestRequestRepository testRequestRepository;
@@ -87,5 +87,6 @@ public class TestRequestService {
         }
         return overdueTests;
     }
+
 
 }
