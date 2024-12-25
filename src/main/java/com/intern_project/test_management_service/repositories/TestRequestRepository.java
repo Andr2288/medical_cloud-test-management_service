@@ -15,5 +15,4 @@ public interface TestRequestRepository extends JpaRepository<TestRequest, Long> 
             Long userId
     );
     List<TestRequest> findTestRequestsByUserUserId(Long userId);
-    List<TestRequest> findAllByUserUserId(Long userId);
 }

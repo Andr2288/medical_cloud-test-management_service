@@ -74,7 +74,7 @@ public class TestRequestService {
     }
 
     public List<TestRequest> findAndUpdateOverdueTests(Long userId) {
-        List<TestRequest> userTests = testRequestRepository.findAllByUserUserId(userId);
+        List<TestRequest> userTests = testRequestRepository.findTestRequestsByUserUserId(userId);
         if (userTests.isEmpty()) {
             throw new EntityNotFoundException("No test requests found for user ID " + userId);
         }
