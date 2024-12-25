@@ -56,7 +56,7 @@ public class TestRequestService {
             throw new IllegalArgumentException("User ID must not be null");
         }
 
-        return testRequestRepository.findByRequestDateBetweenAndUserUserId(startDate, endDate, userId);
+        return testRequestRepository.findTestRequestsByRequestDateBetweenAndUserUserId(startDate, endDate, userId);
     }
 
     public boolean updateStatusIfOverdue(TestRequest testRequest) {
@@ -87,6 +87,4 @@ public class TestRequestService {
         }
         return overdueTests;
     }
-
-
 }
