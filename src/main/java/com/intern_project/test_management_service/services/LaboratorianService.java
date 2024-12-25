@@ -12,7 +12,7 @@ public class LaboratorianService {
 
     private final TestRequestRepository testRequestRepository;
 
-    public TestRequest autoUpdateTestRequestStatus(Long testRequestId) {
+    public TestRequest updateTestRequestStatusToNextStep(Long testRequestId) {
         TestRequest testRequest = testRequestRepository.findById(testRequestId)
                 .orElseThrow(() -> new EntityNotFoundException("TestRequest not found with ID: " + testRequestId));
 
