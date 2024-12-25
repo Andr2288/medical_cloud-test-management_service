@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TestDataFactory {
 
-    public static void createTestData(
+    public static void createAllTestData(
             TestTypeRepository testTypeRepository,
             TestRepository testRepository,
             RoleRepository roleRepository,
@@ -35,15 +35,15 @@ public class TestDataFactory {
 
         // Create Role
         Role role = Role.builder()
-                .name("ROLE_PATIENT")
+                .name("ROLE_TEST")
                 .build();
         roleRepository.save(role);
 
         // Create User
         User user = User.builder()
-                .username("adminUser")
-                .password("password123")
-                .email("admin@example.com")
+                .username("testUser")
+                .password("testPassword")
+                .email("test@example.com")
                 .phoneNumber("+1234567890")
                 .status("Active")
                 .roles(List.of(role))
@@ -60,5 +60,24 @@ public class TestDataFactory {
                 .comments("Test requested for routine checkup.")
                 .build();
         testRequestRepository.save(testRequest);
+    }
+
+    public static User createUser() {
+        // Create Role
+        Role role = Role.builder()
+                .name("ROLE_TEST")
+                .build();
+
+        // Create User
+        User user = User.builder()
+                .username("testUser")
+                .password("testPassword")
+                .email("test@example.com")
+                .phoneNumber("+1234567890")
+                .status("Active")
+                .roles(List.of(role))
+                .build();
+
+        return user;
     }
 }

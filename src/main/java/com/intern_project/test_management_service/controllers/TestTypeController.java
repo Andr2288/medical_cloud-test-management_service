@@ -27,10 +27,10 @@ public class TestTypeController {
     }
 
     // шоб було на всякий випадок
-    @DeleteMapping("/delete-test-by-id")
+    @DeleteMapping("/delete-test-type-by-id")
     public ResponseEntity<Void> deleteTestById(@RequestParam Long id) {
         try {
-            testTypeService.deleteTestById(id);
+            testTypeService.deleteTestTypeById(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

@@ -40,7 +40,7 @@ class TestRequestRepositoryTest {
 
         // Given
         Long userId = 1L;
-        TestDataFactory.createTestData(
+        TestDataFactory.createAllTestData(
                 testTypeRepository,
                 testRepository,
                 roleRepository,
@@ -68,7 +68,7 @@ class TestRequestRepositoryTest {
         LocalDateTime endDate = LocalDateTime.now().plusDays(2);
 
         // Створення тестових даних
-        TestDataFactory.createTestData(
+        TestDataFactory.createAllTestData(
                 testTypeRepository,
                 testRepository,
                 roleRepository,
