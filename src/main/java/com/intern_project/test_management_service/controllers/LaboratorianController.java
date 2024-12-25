@@ -18,7 +18,7 @@ public class LaboratorianController {
     @PostMapping("/test-requests/{testRequestId}/auto-update-status")
     public ResponseEntity<?> autoUpdateTestRequestStatus(@PathVariable Long testRequestId) {
         try {
-            TestRequest updatedTestRequest = laboratorianService.autoUpdateTestRequestStatus(testRequestId);
+            TestRequest updatedTestRequest = laboratorianService.updateTestRequestStatusToNextStep(testRequestId);
             return ResponseEntity.ok(updatedTestRequest);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body("TestRequest with ID " + testRequestId + " not found.");
