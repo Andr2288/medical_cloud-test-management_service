@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -57,12 +59,15 @@ public class TestController {
     @GetMapping("/user/{userId}/date-range")
     public ResponseEntity<List<TestRequest>> getTestRequestsByDateRangeAndUserId(
             @PathVariable Long userId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         try {
+            LocalDateTime startDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateTime = endDate.atTime(LocalTime.MAX);
+
             List<TestRequest> testRequests = testRequestService.getTestRequestsByDateRangeAndUserId(
-                    startDate,
-                    endDate,
+                    startDateTime,
+                    endDateTime,
                     userId
             );
             return ResponseEntity.ok(testRequests);
@@ -70,6 +75,7 @@ public class TestController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
 
     @GetMapping("/users/{userId}/overdue-tests")
     public ResponseEntity<List<TestRequest>> getOverdueTests(@PathVariable Long userId) {
