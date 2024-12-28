@@ -5,6 +5,7 @@ import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.services.TestRequestService;
 import com.intern_project.test_management_service.services.TestService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +50,7 @@ public class TestController {
     }
 
     @PostMapping("/create-test-request")
-    public TestRequest createTestRequest(@RequestBody TestRequest testRequest) {
-
+    public TestRequest createTestRequest(@Valid @RequestBody TestRequest testRequest) {
         testRequest.setRequestDate(LocalDateTime.now());
         testRequestService.calculateEstimatedCompletionTime(testRequest);
         return testRequestService.addTestRequest(testRequest);

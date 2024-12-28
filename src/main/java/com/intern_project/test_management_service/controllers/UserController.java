@@ -3,6 +3,7 @@ package com.intern_project.test_management_service.controllers;
 import com.intern_project.test_management_service.models.User;
 import com.intern_project.test_management_service.repositories.UserRepository;
 import com.intern_project.test_management_service.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/create-user")
-    public User createUser(@RequestBody User user) {
-
+    public User createUser(@Valid @RequestBody User user) {
         return userService.addUser(user);
     }
 

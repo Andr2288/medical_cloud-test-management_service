@@ -1,6 +1,9 @@
 package com.intern_project.test_management_service.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,10 +26,12 @@ public class TestRequest {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull(message = "User is required.")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "test_id")
+    @NotNull(message = "Test is required.")
     private Test test;
 
     @Column(name = "request_date")
@@ -39,8 +44,10 @@ public class TestRequest {
     private LocalDateTime estimatedCompletionTime;
 
     @Column(name = "status")
-    private String status;
+    @NotBlank(message = "Status is required.")
+    private String status = "PENDING";
 
     @Column(name = "comments")
+    @Size(max = 500, message = "Comments must not exceed 500 characters.")
     private String comments;
 }
