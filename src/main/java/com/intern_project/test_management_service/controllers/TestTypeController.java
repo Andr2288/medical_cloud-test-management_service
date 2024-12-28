@@ -26,7 +26,6 @@ public class TestTypeController {
         return testTypeService.addTestType(testType);
     }
 
-    // шоб було на всякий випадок
     @DeleteMapping("/delete-test-type-by-id")
     public ResponseEntity<Void> deleteTestById(@RequestParam Long id) {
         try {

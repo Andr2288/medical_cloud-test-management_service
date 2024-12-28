@@ -40,10 +40,8 @@ public class UserController {
     @DeleteMapping("/delete-user-by-id/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
 
-        // Fetch the user by ID
         Optional<User> optionalUser = userRepository.findById(id);
 
-        // If the user is found, set the delete date to current
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setDeleteDate(LocalDateTime.now());
@@ -57,10 +55,8 @@ public class UserController {
     @PutMapping("/restore-user-by-id/{id}")
     public ResponseEntity<String> restoreUserById(@PathVariable Long id) {
 
-        // Fetch the user by ID
         Optional<User> optionalUser = userRepository.findById(id);
 
-        // If the user is found, reset the delete date to null
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
