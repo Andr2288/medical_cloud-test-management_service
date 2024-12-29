@@ -23,12 +23,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.mockito.Mockito.when;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class RoleControllerTest {
 
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_CLIENT = "ROLE_CLIENT";
+    public static final String ROLE_LAB_TECHNICIAN = "ROLE_LAB_TECHNICIAN";
+
+    public static final String GET_ROLES = "/get-roles";
+    public static final String CREATE_ROLE = "/create-role";
     @Autowired
     private MockMvc mockMvc;
 
@@ -51,12 +55,12 @@ class RoleControllerTest {
         // Given
         Role role1 = Role.builder()
                 .roleId(1L)
-                .name("ROLE_ADMIN")
+                .name(ROLE_ADMIN)
                 .build();
 
         Role role2 = Role.builder()
                 .roleId(2L)
-                .name("ROLE_CLIENT")
+                .name(ROLE_CLIENT)
                 .build();
 
         List<Role> roles = Arrays.asList(role1, role2);
@@ -64,37 +68,37 @@ class RoleControllerTest {
         when(roleService.getRoles()).thenReturn(roles);
 
         // When & Then
-        mockMvc.perform(get("/get-roles")
+        mockMvc.perform(get(GET_ROLES)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].roleId").value(1))
-                .andExpect(jsonPath("$[0].name").value("ROLE_ADMIN"))
+                .andExpect(jsonPath("$[0].name").value(ROLE_ADMIN))
                 .andExpect(jsonPath("$[1].roleId").value(2))
-                .andExpect(jsonPath("$[1].name").value("ROLE_CLIENT"));
+                .andExpect(jsonPath("$[1].name").value(ROLE_CLIENT));
     }
 
     @Test
     void createRole_ShouldReturnCreatedRole() throws Exception {
         // Given
         Role inputRole = Role.builder()
-                .name("ROLE_LAB_TECHNICIAN")
+                .name(ROLE_LAB_TECHNICIAN)
                 .build();
 
         Role savedRole = Role.builder()
                 .roleId(1L)
-                .name("ROLE_LAB_TECHNICIAN")
+                .name(ROLE_LAB_TECHNICIAN)
                 .build();
 
         when(roleService.addRole(any(Role.class))).thenReturn(savedRole);
 
         // When & Then
-        mockMvc.perform(post("/create-role")
+        mockMvc.perform(post(CREATE_ROLE)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inputRole)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.roleId").value(1))
-                .andExpect(jsonPath("$.name").value("ROLE_LAB_TECHNICIAN"));
+                .andExpect(jsonPath("$.name").value(ROLE_LAB_TECHNICIAN));
     }
 }
