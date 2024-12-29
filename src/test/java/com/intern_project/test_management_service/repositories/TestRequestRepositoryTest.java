@@ -4,7 +4,6 @@ import com.intern_project.test_management_service.models.Role;
 import com.intern_project.test_management_service.models.TestRequest;
 import com.intern_project.test_management_service.models.TestType;
 import com.intern_project.test_management_service.models.User;
-import com.intern_project.test_management_service.utils.JsonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.List;
 
